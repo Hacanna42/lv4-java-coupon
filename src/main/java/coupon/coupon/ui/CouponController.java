@@ -29,6 +29,7 @@ public class CouponController {
         return CouponResponse.from(couponService.getCoupon(couponId));
     }
 
+    // 쿠폰의 발급 수량 조회
     @GetMapping("{couponId:^\\d+$}/issued-count")
     public Long getCouponIssuedCount(@PathVariable("couponId") Long couponId) {
         Coupon coupon = couponService.getCoupon(couponId);

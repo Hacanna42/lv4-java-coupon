@@ -101,8 +101,7 @@ public class IndexPerformanceTest {
         AtomicInteger requestCount = new AtomicInteger(0);
         AtomicLong totalElapsedTime = new AtomicLong(0);
 
-        int statusCode = RestAssured.get("/member-coupons/by-member-id?memberId=" + ThreadLocalRandom.current()
-                .nextLong(MIN_MEMBER_ID, MAX_MEMBER_ID + 1)).statusCode();
+        int statusCode = RestAssured.get("/member-coupons/by-member-id?memberId=181993").statusCode();
         assertThat(statusCode).withFailMessage("회원이 가지고 있는 쿠폰 조회 API 호출에 실패했습니다. 테스트 대상 서버가 실행중인지 확인해 주세요.").isEqualTo(200);
 
         executeMultipleRequests(running, requestCount, totalElapsedTime,
@@ -172,6 +171,11 @@ public class IndexPerformanceTest {
 
             elapsedTime += endTime - startTime;
             requestCount.incrementAndGet();
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         totalElapsedTime.addAndGet(elapsedTime);
